@@ -74,24 +74,26 @@ public class LoginController {
         jsonObject.put("Password",pass);
         Response ret = null;
         System.out.println(jsonObject.toString());
-        try
-        {
-            ret = post("http://swms.fzu.edu.cn/MobileLogin/StudentLogin",jsonObject.toString());
-            if (ret.isSuccessful())
-            {
-                String session = MyCookie.getSession(ret.header("Set-Cookie"));
-                System.out.println("Set-Cookie:"+ret.header("Set-Cookie"));
-                request.getSession().setAttribute("FzuCookie",session);
-                System.out.println(request.getSession().getAttribute("cookieId:"+request.getSession().getId()+"FzuCookie"));
-            }
-        }
-        catch (IOException e )
-        {
-            System.out.println(e);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return ret.body().string();
+        request.getSession().setAttribute("FzuCookie",userName);
+        System.out.println("cookieId:"+request.getSession().getId()+" FzuCookie");
+//        try
+//        {
+//            ret = post("http://swms.fzu.edu.cn/MobileLogin/StudentLogin",jsonObject.toString());
+//            if (ret.isSuccessful())
+//            {
+//                String session = MyCookie.getSession(ret.header("Set-Cookie"));
+//                System.out.println("Set-Cookie:"+ret.header("Set-Cookie"));
+//                request.getSession().setAttribute("FzuCookie",userName);
+//                System.out.println(request.getSession().getAttribute("cookieId:"+request.getSession().getId()+"FzuCookie"));
+//            }
+//        }
+//        catch (IOException e )
+//        {
+//            System.out.println(e);
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+        return "ok";
     }
 
     @RequestMapping(value = "/test2")
@@ -99,7 +101,7 @@ public class LoginController {
     public String loginTest2(@RequestParam(value = "userName")String userName,
             HttpServletRequest request){
         String str = "aaa";
-        System.out.println(request.getSession().getAttribute("CookieId:"+request.getSession().getId()+" FzuCookie"));
+        System.out.println(request.getSession().getAttribute("FzuCookie")+" CookieId:"+request.getSession().getId());
 //        try
 //        {
 //            str = post2("http://swms.fzu.edu.cn/MobileInfoAdmin/GetStudentInfoById","ASP.NET_SessionId=sotoqe453zpshq31brjdd245");
